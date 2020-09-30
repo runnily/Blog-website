@@ -1,0 +1,182 @@
+Once we have our new project open -that is django project
+we would see a new folder appear. The tree structure of this folder
+is shown below:
+django_project
+    -> django_project
+        -> __init__.py
+        -> asgi.py
+        -> setting.py
+        -> urls.py
+        -> wsgi.py
+    -> manage.py
+
+__init__.py: Tells us its a python package
+setting.py: Allow you to change the settings off the website
+urls.py: Is the setting of the mapping of urls to where it sends the user
+wsgi.py: This is how our python web application and server communicates.
+
+We can create a website project and within that website we could have
+muliple apps. We could have a blog, or a store app. Therefore a single project
+contain multiple apps.
+
+python manage.py startapp blog #allows you to create an app
+
+When we add our templates, we would need to include the app under our main 
+project website. This allows Django to know where the templates is. To add the app
+we would need to go into our configuration within settings main website and copy the app.py into our website
+
+- its good practice too add your app into the website sitting. To allow django to locate your
+templates.
+
+- its good pratice not to hard code urls on html
+
+- static files like css and javascript need to be located in a static folder within the app
+
+python manage.py createsuperuser - creats admin
+we need to run migrations before making this command.
+This would add a default tables for us.
+python manage.py makemigrations 
+python manage.py migrate
+
+To work with databases, Django has an ORM. ORM denotes an object relation mapper. This allows you
+to access database in an easy use object ortiented way. It works with different types of database. 
+We can reperesent our data structure as classes commonly called models. 
+
+To update tables (models) we to make create migrations
+
+python manage.py sqlmigrate blog 0001 - to see sql code
+
+User.objects.all()
+User.objects.first()
+User.objects.filter(username='runnily')
+
+>>> from blog.models import Post
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+<QuerySet [<User: runnily>]>
+>>> User.objects.first()
+<User: runnily>
+>>> User.objects.filter(username='runnily')
+<QuerySet [<User: runnily>]>
+>>> user = User.objects.filter(username='runnily').first()
+>>> user.id
+1
+>>> user.pk
+1
+>>> user = User.objects.get(id=1)
+>>> user
+<User: runnily>
+>>> Post.objects.all()
+<QuerySet []>
+>>> post_1 = Post(title='Blog 1', content='First Post content!', author =user)
+>>> Post.objects.all()
+<QuerySet []>
+>>> post_1.save()
+>>> Post.objects.all()
+<QuerySet [<Post: Post object (1)>]>
+>>> Post.object.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'object'
+>>> Post.objects.all()
+<QuerySet [<Post: Post object (1)>]>
+>>> 
+
+>>> from blog.models import Post
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+<QuerySet [<User: runnily>]>
+>>> User.objects.first()
+<User: runnily>
+>>> User.objects.filter(username='runnily')
+<QuerySet [<User: runnily>]>
+>>> user = User.objects.filter(username='runnily').first()
+>>> user.id
+1
+>>> user.pk
+1
+>>> user = User.objects.get(id=1)
+>>> user
+<User: runnily>
+>>> Post.objects.all()
+<QuerySet []>
+>>> post_1 = Post(title='Blog 1', content='First Post content!', author =user)
+>>> Post.objects.all()
+<QuerySet []>
+>>> post_1.save()
+>>> Post.objects.all()
+<QuerySet [<Post: Post object (1)>]>
+>>> Post.object.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'object'
+>>> Post.objects.all()
+<QuerySet [<Post: Post object (1)>]>
+>>> exit()
+(env) Adannas-Air:django_project runnily$ python manage.py shell
+Python 3.8.1 (v3.8.1:1b293b6006, Dec 18 2019, 14:08:53) 
+[Clang 6.0 (clang-600.0.57)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from blog.models import Post
+>>> from django.contrib.auth.models import User
+>>> Post.objects.all()
+<QuerySet [<Post: Blog 1>]>
+>>> user = User.objects.filter(username='runnily').first()
+>>> user
+<User: runnily>
+>>> post_1 = Post(title="Blog 2', content='Second Post Content!' author_id=user_id)
+  File "<console>", line 1
+    post_1 = Post(title="Blog 2', content='Second Post Content!' author_id=user_id)
+                                                                                  ^
+SyntaxError: EOL while scanning string literal
+>>> post_1 = Post(title="Blog 2', content='Second Post Content!', author_id=user_id)
+  File "<console>", line 1
+    post_1 = Post(title="Blog 2', content='Second Post Content!', author_id=user_id)
+                                                                                   ^
+SyntaxError: EOL while scanning string literal
+>>> post_1 = post(title='Blog 2', content='Second Post Content!', author_id=user_id)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'post' is not defined
+>>> post_1 = Post(title='Blog 2', content='Second Post Content!', author_id=user_id)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'user_id' is not defined
+>>> post_1 = Post(title='Blog 2', content='Second Post Content!', author_id=user.id)
+>>> post_1.save()
+>>> Post.objects.all()
+<QuerySet [<Post: Blog 1>, <Post: Blog 2>]>
+>>> post = Post.objects.first()
+>>> post.content
+'First Post content!'
+>>> post.date_posted
+datetime.datetime(2020, 9, 29, 14, 13, 41, 640271, tzinfo=<UTC>)
+>>> post.author
+<User: runnily>
+>>> poust.author.email
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'poust' is not defined
+>>> post.author.email
+'aaddanna@outlook.com'
+>>> user
+<User: runnily>
+>>> user.posts_set
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'User' object has no attribute 'posts_set'
+>>> user.post_set
+<django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager object at 0x7fb05cc02880>
+>>> user.post_set.all()
+<QuerySet [<Post: Blog 1>, <Post: Blog 2>]>
+>>> user.post_set.create(title= 'Blog 3', content='Third Post Content')
+<Post: Blog 3>
+>>> Post.objects.all()
+<QuerySet [<Post: Blog 1>, <Post: Blog 2>, <Post: Blog 3>]>
+>>> 
+
+startapp allows us to create app
+Create forms from sratch maybe be a little to much.
+However this process is so common, we dont have to invent the wheel.
+We instead use django classes to create a form.
