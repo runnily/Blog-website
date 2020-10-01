@@ -180,3 +180,6 @@ startapp allows us to create app
 Create forms from sratch maybe be a little to much.
 However this process is so common, we dont have to invent the wheel.
 We instead use django classes to create a form.
+
+
+when you do makemigrations and migrate make sure you register the model on the admin

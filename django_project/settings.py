@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -123,11 +124,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#were using the join in os libarary is ensuring the full path in the directory is created correctly no matter what path
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #To store uploaded in a directory. The performance reason where its stored on directly not a database
+MEDIA_URL = '/media/' #how we accesss profile on the url
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 #modify location of where which url we go to when we login
 LOGIN_REDIRECT_URL = 'blog-home'
 #modify where we put our login in route
 LOGIN_URL = 'login'
+
 
 
