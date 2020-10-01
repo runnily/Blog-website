@@ -9,6 +9,16 @@
             <p class="text-secondary">{{user.email}}</p>
         </div>
         </div>
-        <!-- FORM HERE -->
+        <form method="POST" enctype="multipart/form-data"> <!--For image data we have to add a special encoding type called enctype-->
+            {%csrf_token%} <!--added secuirty for django-->
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4"> Profile Info</legend>
+                {{u_form|crispy}} <!--crispy form application to paste the form out-->
+                {{p_form|crispy}} <!--crispy form application to paste the form out-->
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit"> Update</button>
+            </div>
+        </form>
     </div>
 {% endblock content %}

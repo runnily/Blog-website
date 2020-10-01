@@ -2,6 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Profile
 
 class UserRegisterForm(UserCreationForm):
     '''
@@ -25,3 +26,19 @@ class UserRegisterForm(UserCreationForm):
         #fields that are going to be shown on our form
         fields = ['username', 'email', 'password1', 'password2']
 
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField() #fields in addition to the model
+
+
+    class Meta:
+        
+        model = User #model we want this form to interact with
+
+        #fields that are going to be shown on our form
+        fields = ['username', 'email'] #
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
