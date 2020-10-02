@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import (ListView, 
     DetailView, 
     CreateView,
     UpdateView,
     DeleteView)
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from .models import Post
 
 
@@ -26,6 +27,25 @@ class PostListView(ListView):
     template_name = 'blog/home.html' # <app>/<model>_<viewtype>.html 
     context_object_name = 'posts' #we need to change this inial attribute from 'object.list' to ->  'posts'
     ordering = ['-date_posted'] #changes from newest to oldest
+    paginate_by = 10 #This is the attribute to specify how many pages we want to see
+    #our class based view already has variables to paginmations links
+
+class UserListView(ListView):
+    #Model should the view interact with
+    model = Post #what model to query in order to create our post
+    template_name = 'blog/user_posts.html' # <app>/<model>_<viewtype>.html 
+    context_object_name = 'posts' #we need to change this inial attribute from 'object.list' to ->  'posts'
+    paginate_by = 5 #This is the attribute to specify how many pages we want to see
+    #our class based view already has variables to paginmations links
+
+    #we want too add a filter that shows the post from a specific user
+    #To over the query which the post gets we apply this filter below:
+    def get_queryset(self):
+        #kwargs are going to query parameters from the url
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-date_posted')
+
+        
 
 class PostDetailView(DetailView):
     model = Post #what model to query in order to create our post

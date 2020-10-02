@@ -183,3 +183,24 @@ We instead use django classes to create a form.
 
 
 when you do makemigrations and migrate make sure you register the model on the admin
+
+
+With views we can either do functional views or detail class views. Detail classs view often come with less code to write.
+What we need to do is specify the model we want the view to interact it. There are "template_name", which is inially within
+templates/<app>/<app>_<typeview>.html. However by assigning this attribute again we could change that. The model is passed to the html template_name
+under the name "object". However again with the variable "context_object_name".
+
+When inputing image data into a form we need to ensure we add the attibute "enctype="multipart/form-data" into our form.
+When creating a form we need to ensure we add {%csrf_token%}. This is added secuirty for django if we do not do this
+the form would not work.
+
+import json
+from blog.models import Post
+
+with open('posts.json') as f:
+    posts_json = json.load(f)
+
+for post in posts_json:
+    post = Post(title=post['title'], content=post['content'], author_id= post['user_id'] )
+    post.save()
+

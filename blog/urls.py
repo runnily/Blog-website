@@ -1,11 +1,14 @@
 from django.urls import path
 from .views import (PostListView, PostDetailView, 
     PostCreateView, PostUpdateView,
-    PostDeleteView)
+    PostDeleteView, UserListView)
 from . import views
 
+
+#the <> are models already define within django or within our models.py
 urlpatterns = [
     path('', PostListView.as_view(), name="blog-home"), #This allows us to go to home
+    path('user/<str:username>', UserListView.as_view(), name="user-posts"),
     #were using a pk to point to a particular primary key
     path('post/<int:pk>', PostDetailView.as_view(), name="post-detail"),
     path('post/new', PostCreateView.as_view(), name="post-create"),
