@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 #We import the user model here, Django made this in the location below
 from django.contrib.auth.models import User
+from django.urls import reverse 
 
 class Post(models.Model):
     '''
@@ -19,5 +20,12 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-        
+
+    #To find the URL of a model object:
+    #we need to create a get absolute url method, that
+    #returns that path to any specific instance of our model
+
+    def get_absolute_url(self):
+        #Reverse method returns the string of the url
+        return reverse('post-detail', kwargs={'pk':self.pk})
 

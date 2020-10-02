@@ -32,6 +32,7 @@
               <div class="navbar-nav">
                 <!--user contains current user and has an attribute is_authenticated, allows to check if user is logged in or not-->
                 {%if user.is_authenticated%}
+                <a class="nav-item nav-link" href="{%url 'post-create'%}">New Post</a>
                 <a class="nav-item nav-link" href="{%url 'profile'%}">Profile</a>
                 <a class="nav-item nav-link" href="{%url 'logout'%}">Logout</a>
                 {%else%}
