@@ -1,2 +1,2 @@
-# django_project
-A blog website created using Django framework
+# Blog website
+A blog website implemented using the django framework
